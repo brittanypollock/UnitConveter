@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var currentTemp = "0"
+    @State private var choosenUnit = "Celsius"
     @FocusState private var tempIsFocused: Bool
+    
+    let units = ["Celsius", "Kelvin"]
+    
+    //Formula 
     
     var body: some View {
         NavigationStack{
@@ -19,6 +24,20 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
                         .focused($tempIsFocused)
                 }
+                
+                Section {
+                    Picker("Units", selection: $choosenUnit) {
+                        ForEach(units, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                Section {
+                    // Some Code
+                }
+                
             }
             .navigationTitle("Temperature Converter")
             .toolbar {
