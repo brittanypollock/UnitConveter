@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var currentTemp = "0"
+    @FocusState private var tempIsFocused: Bool
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack{
+            Form {
+                Section("Fahrenheit Temp:") {
+                    TextField("Input", text: $currentTemp)
+                        .keyboardType(.decimalPad)
+                        .focused($tempIsFocused)
+                }
+            }
+            .navigationTitle("Temperature Converter")
+            .toolbar {
+                Button("Done") {
+                    tempIsFocused = false
+                }
+            }
         }
-        .padding()
     }
 }
 
