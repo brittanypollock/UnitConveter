@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var currentTemp = "0"
+    @State private var currentTemp = 0.0
     @State private var choosenUnit = "Celsius"
     @FocusState private var tempIsFocused: Bool
     
@@ -25,12 +25,10 @@ struct ContentView: View {
     }
     
     var convertedTemp: Double {
-        let temperature = Double(currentTemp) ?? 0
-        
         if choosenUnit == "Celsius" {
-            return fahrToCelcius(temp: temperature)
+            return fahrToCelcius(temp: currentTemp)
         } else {
-            return fahrToKelvin(temp: temperature)
+            return fahrToKelvin(temp: currentTemp)
         }
     }
     
@@ -38,7 +36,7 @@ struct ContentView: View {
         NavigationStack{
             Form {
                 Section("Fahrenheit Temp:") {
-                    TextField("Input", text: $currentTemp)
+                    TextField("Input", value: $currentTemp, format: .number)
                         .keyboardType(.decimalPad)
                         .focused($tempIsFocused)
                 }
