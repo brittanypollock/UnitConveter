@@ -14,7 +14,25 @@ struct ContentView: View {
     
     let units = ["Celsius", "Kelvin"]
     
-    //Formula 
+    func fahrToCelcius(temp: Double) -> Double {
+        return (temp - 32) * 5/9
+    }
+    
+    func fahrToKelvin(temp: Double) -> Double {
+        let c = fahrToCelcius(temp: temp)
+        
+        return c + 273.15
+    }
+    
+    var convertedTemp: Double {
+        let temperature = Double(currentTemp) ?? 0
+        
+        if choosenUnit == "Celsius" {
+            return fahrToCelcius(temp: temperature)
+        } else {
+            return fahrToKelvin(temp: temperature)
+        }
+    }
     
     var body: some View {
         NavigationStack{
@@ -25,7 +43,7 @@ struct ContentView: View {
                         .focused($tempIsFocused)
                 }
                 
-                Section {
+                Section("Choose a Unit") {
                     Picker("Units", selection: $choosenUnit) {
                         ForEach(units, id: \.self) {
                             Text($0)
@@ -34,8 +52,8 @@ struct ContentView: View {
                     .pickerStyle(.segmented)
                 }
                 
-                Section {
-                    // Some Code
+                Section("Converted Temp:") {
+                    Text("\(convertedTemp)")
                 }
                 
             }
